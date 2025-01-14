@@ -1,0 +1,1 @@
+export const process = async (comment: string) => {}
