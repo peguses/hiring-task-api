@@ -1,0 +1,21 @@
+version: "2"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      sentiment-api:
+
+networks:
+  sentiment-api:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.12.0.0/16

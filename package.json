@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "npx nodemon src/index.ts",
+    "dev": "NODE_ENV=local npx nodemon src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch"
   },
