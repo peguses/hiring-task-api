@@ -9,7 +9,8 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
     res.status(401).json({ error: "Authentication required!" });
