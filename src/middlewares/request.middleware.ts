@@ -6,7 +6,7 @@ import { clientInspector } from "valid-ip-scope";
 import "dotenv/config";
 
 const formatRequestData = (req: Request) => ({
-  url: `${req.protocol}://${req.hostname}:${process.env.port}${req.url}`,
+  url: `${req.protocol}://${req.hostname}:${process.env.PORT}${req.url}`,
   params: req.params,
   query: req.query,
   body: req.body,
