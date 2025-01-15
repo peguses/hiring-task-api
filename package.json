@@ -1,15 +1,17 @@
 {
   "scripts": {
-    "dev": "NODE_ENV=local npx nodemon src/index.ts",
+    "dev": "NODE_ENV=local GOOGLE_APPLICATION_CREDENTIALS=/home/jayanwadusinghearachchi/projects/google_key/pulse-di.json npx nodemon src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@google-cloud/language": "^6.5.0",
     "@types/cors": "^2.8.17",
     "@types/http-status": "^1.1.2",
     "@types/jest": "^29.5.14",
     "@types/sentiment": "^5.0.4",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -33,6 +35,6 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.0",
     "nodemon": "^3.1.7",
-    "tsconfig-paths": "^4.2.0"  
+    "tsconfig-paths": "^4.2.0"
   }
 }

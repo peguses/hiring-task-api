@@ -1,3 +1,8 @@
+export interface IScore {
+  comment: string,
+  score: number
+}
+
 type SentimentStrategy = (comment: string) => void;
 
 export const createSentimentService = (

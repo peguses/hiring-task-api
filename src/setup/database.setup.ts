@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import { authService } from "@/services";
 import { CreateUserRequestType } from "@/types";
 import "dotenv/config";
+import { FeedBackEntity } from "@/entities/feedback.entity";
 
 export const databaseSetup = async (): Promise<void> => {
   await createDatabase({
@@ -20,7 +21,7 @@ export const databaseSetup = async (): Promise<void> => {
       port: Number(process.env.DB_PORT) || 5432,
       database: process.env.DB_DATABASE,
       synchronize: true,
-      entities: [UserEntity],
+      entities: [UserEntity, FeedBackEntity],
       entitySkipConstructor: true,
       namingStrategy: new SnakeNamingStrategy(),
     },

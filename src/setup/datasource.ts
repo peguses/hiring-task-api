@@ -3,6 +3,7 @@
 import { DataSource } from "typeorm";
 import { UserEntity } from "@/entities";
 import "dotenv/config";
+import { FeedBackEntity } from "@/entities/feedback.entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,8 +13,7 @@ export const AppDataSource = new DataSource({
   port: Number(process.env.DB_PORT) || 5432,
   database: process.env.DB_DATABASE,
   // schema: "public",  
-  entities: [UserEntity],
-  migrations: ["src/migration/**/*.ts"],
+  entities: [UserEntity, FeedBackEntity],
   logging: false,
   synchronize: true,
 });
