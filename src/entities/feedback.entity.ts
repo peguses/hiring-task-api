@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { CoreEntity } from "./core.entity";
 
 @Entity({ name: "feed_back" })
-export class FeedBackEntity extends CoreEntity {
+export class FeedbackEntity extends CoreEntity {
   @PrimaryGeneratedColumn("uuid")
   uuid: string;
 

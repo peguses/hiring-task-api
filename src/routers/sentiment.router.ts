@@ -9,3 +9,5 @@ sentimentRouter.post(
   validationRules,
   sentimentController.postFeedback
 );
+
+sentimentRouter.get("/feedbacks", sentimentController.getFeedbacks);
