@@ -1,23 +1,31 @@
 import { FeedBackEntity } from "@/entities/feedback.entity";
+import { SentimentService } from "@/enums/sentiment.service.enum";
 import { AfinnSentimentStrategy, GoogleSentimentStrategy, VaderSentimentStrategy } from "@/sentiments"
 import { createSentimentService } from "@/sentiments/sentiment.strategy.context"
 import { AppDataSource } from "@/setup/datasource";
 import { FeedBackRequestType } from "@/types";
 
+
+const selectSentimentService = () => {
+    switch(process.env.SENTIMENT_SERVICE) {
+        case SentimentService.FINN_SERVICE :
+           return  createSentimentService(AfinnSentimentStrategy.process);
+        case SentimentService.GOOGLE_SERVICE: 
+            return createSentimentService(GoogleSentimentStrategy.process);
+        case SentimentService.VADER_SERVICE:
+            return createSentimentService(VaderSentimentStrategy.process);
+        default: 
+            throw `service ${process.env.SENTIMENT_SERVICE} not supported`
+
+    }
+}
+
 export const saveSentiment = async (feedback: FeedBackRequestType) => {
 
     const feedbackRepository = AppDataSource.getRepository(FeedBackEntity);
 
-    const afinnService  = createSentimentService(AfinnSentimentStrategy.process);
-    await afinnService.processComment(feedback.comment);
+    const service  = selectSentimentService();
+    const score = await service.processComment(feedback.comment);
 
-    const vaderService  = createSentimentService(VaderSentimentStrategy.process);
-    await vaderService.processComment(feedback.comment);
-
-    const googleService  = createSentimentService(GoogleSentimentStrategy.process);
-    await googleService.processComment(feedback.comment)
-
-    feedbackRepository.save({...feedback, sentimentScore: 12});
-
-
+    feedbackRepository.save({...feedback, sentimentScore: score});
 }

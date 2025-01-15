@@ -3,7 +3,7 @@ export interface IScore {
   score: number
 }
 
-type SentimentStrategy = (comment: string) => void;
+type SentimentStrategy = (comment: string) => Promise<number>;
 
 export const createSentimentService = (
   sentimentStrategy: SentimentStrategy
