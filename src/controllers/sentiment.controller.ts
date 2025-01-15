@@ -1,10 +1,19 @@
+
 import { sentimentService } from "@/services";
-import { saveSentiment } from "@/services/sentiment.service";
+import { FeedBackRequestType } from "@/types";
 import { errorHandlerWrapper } from "@/utils";
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
 const handlePostSentiment = async (req: Request, res: Response) => {
-  await sentimentService.saveSentiment();
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const feedBack: FeedBackRequestType = req.body
+
+  await sentimentService.saveSentiment(feedBack);
   return res.status(200).json({ run: "true" });
 };
 

@@ -1,12 +1,10 @@
 import Sentiment from "sentiment";
 
-export const process = async (comment: string) => {
-
-    console.log(comment);   
+export const process = async (comment: string) :Promise<number> => { 
 
     const sentiment = new Sentiment();
 
     const result = sentiment.analyze(comment);
 
-    console.log(result);
+    return result.score;
 }

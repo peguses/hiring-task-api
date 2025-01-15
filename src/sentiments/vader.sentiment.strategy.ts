@@ -1,6 +1,6 @@
 import vader from "vader-sentiment";
 
-export const process = async (comment: string) => {
+export const process = async (comment: string) : Promise<number> => {
     const result = vader.SentimentIntensityAnalyzer.polarity_scores(comment);
-    console.log(result)
+    return result.compound
 }

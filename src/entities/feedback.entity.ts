@@ -17,5 +17,5 @@ export class FeedBackEntity extends CoreEntity {
   comment: string;
 
   @Column({name: "sentiment_score", nullable: true})
-  sentimentScore: string;
+  sentimentScore: number;
 }
