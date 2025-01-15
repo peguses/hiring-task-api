@@ -5,7 +5,7 @@ import { Router } from "express";
 export const sentimentRouter = Router();
 
 sentimentRouter.post(
-  "/sentiments",
+  "/feedbacks",
   validationRules,
-  sentimentController.postSentiment
+  sentimentController.postFeedback
 );

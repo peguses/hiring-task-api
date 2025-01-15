@@ -21,12 +21,13 @@ const selectSentimentService = () => {
     }
 }
 
-export const saveSentiment = async (feedback: FeedBackRequestType) => {
+export const saveSentiment = async (feedback: FeedBackRequestType) :Promise<FeedBackRequestType> => {
 
     const feedbackRepository = AppDataSource.getRepository(FeedBackEntity);
 
     const service  = selectSentimentService();
     const score = await service.processComment(feedback.comment);
+    const response = await feedbackRepository.save({...feedback, sentimentScore: score});
 
-    feedbackRepository.save({...feedback, sentimentScore: score});
+    return { ...response, uuid: response.uuid };
 }
