@@ -2,9 +2,13 @@
 
 import { databaseSetup } from "./setup";
 import { backendSetup } from "./setup/backend.setup";
+import { validateConfiguration } from "./setup/validate.configuration";
 import { Logger, MESSAGES } from "./utils";
 
 const setupServer = async () => {
+
+  validateConfiguration();
+  
   try {
     await databaseSetup();
     Logger.info(MESSAGES.CONNECTED_DATABASE);

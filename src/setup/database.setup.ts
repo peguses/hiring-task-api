@@ -36,12 +36,12 @@ export const databaseSetup = async (): Promise<void> => {
 
   if (userCount === 0) {
     const adminHashedPassword = await bcrypt.hash(
-      process.env.ADMIN_PASSWORD,
+      process.env.ADMIN_PASSWORD ?? "admin",
       10
     );
 
     const adminUser: CreateUserRequestType = {
-      name: process.env.ADMIN_NAME,
+      name: process.env.ADMIN_NAME ?? "admin",
       hashedPassword: adminHashedPassword,
       role: "admin",
     };
