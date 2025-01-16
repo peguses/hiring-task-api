@@ -1,4 +1,5 @@
 import { sentimentController } from "@/controllers";
+import { authMiddleware } from "@/middlewares";
 import { validationRules } from "@/types/feedback.type";
 import { Router } from "express";
 
@@ -10,4 +11,4 @@ sentimentRouter.post(
   sentimentController.postFeedback
 );
 
-sentimentRouter.get("/feedbacks", sentimentController.getFeedbacks);
+sentimentRouter.get("/feedbacks", authMiddleware, sentimentController.getFeedbacks);
