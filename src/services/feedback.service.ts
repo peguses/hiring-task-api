@@ -46,7 +46,7 @@ export const getFeedbacks = async (
   searchValue: string
 ): Promise<PaginatedResponseType<FeedBackRequestType>> => {
   
-  if (!Object.values(FeedBackSearchKey).includes(searchKey as FeedBackSearchKey)) {
+  if (searchKey && !Object.values(FeedBackSearchKey).includes(searchKey as FeedBackSearchKey)) {
       throw `query param ${searchKey} not supported`
   }
 
