@@ -62,7 +62,7 @@ export const getFeedbacks = async (
     });
   }
 
-  query.skip(skip).take(limit);
+  query.skip(skip).take(limit).orderBy('feed_back.created_at', 'DESC') 
 
   const [items, totalCount] = await query.getManyAndCount();
 
