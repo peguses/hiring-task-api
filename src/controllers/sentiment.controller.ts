@@ -17,7 +17,7 @@ const handlePostFeedback = async (req: Request, res: Response) => {
 
   const response  = await feedbackService.saveFeedback(feedBack);
   
-  return res.status(200).json({ ...response });
+  return res.status(201).json({ ...response });
 };
 
 const handleGetFeedbacks = async(req: Request, res: Response) => {
