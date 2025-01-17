@@ -1,6 +1,6 @@
 
 import { feedbackService } from "@/services";
-import { FeedBackRequestType } from "@/types";
+import { FeedBackType } from "@/types";
 import { errorHandlerWrapper } from "@/utils";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
@@ -13,7 +13,7 @@ const handlePostFeedback = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const feedBack: FeedBackRequestType = req.body;
+  const feedBack: FeedBackType = req.body;
 
   const response  = await feedbackService.saveFeedback(feedBack);
   
@@ -36,7 +36,14 @@ const handleGetFeedbacks = async(req: Request, res: Response) => {
 
 }
 
+const handleFeedbackStatistics = async(req: Request, res: Response) => {
+    const statistics = await feedbackService.getFeedbackStatistics();
+    return res.status(200).json({...statistics})
+}
+
 
 export const postFeedback = errorHandlerWrapper(handlePostFeedback);
 
 export const getFeedbacks = errorHandlerWrapper(handleGetFeedbacks);
+
+export const getFeedbacksStatistics = errorHandlerWrapper(handleFeedbackStatistics);

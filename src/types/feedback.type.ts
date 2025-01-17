@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export type FeedBackRequestType = {
+export type FeedBackType = {
   uuid: string;
   customerName?: string;
   customerEmail?: string;

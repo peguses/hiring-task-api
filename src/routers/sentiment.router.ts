@@ -12,3 +12,5 @@ sentimentRouter.post(
 );
 
 sentimentRouter.get("/feedbacks", authMiddleware, sentimentController.getFeedbacks);
+
+sentimentRouter.get("/feedbacks/statistics", authMiddleware, sentimentController.getFeedbacksStatistics);

@@ -8,7 +8,8 @@ import {
 } from "@/sentiments";
 import { createSentimentService } from "@/sentiments/sentiment.strategy.context";
 import { AppDataSource } from "@/setup/datasource";
-import { FeedBackRequestType } from "@/types";
+import { FeedBackType } from "@/types";
+import { FeedbackStatisticsType } from "@/types/feedback.statistics.type";
 import { PaginatedResponseType } from "@/types/paginated.response.type";
 
 const selectSentimentService = () => {
@@ -25,8 +26,8 @@ const selectSentimentService = () => {
 };
 
 export const saveFeedback = async (
-  feedback: FeedBackRequestType
-): Promise<FeedBackRequestType> => {
+  feedback: FeedBackType
+): Promise<FeedBackType> => {
   const feedbackRepository = AppDataSource.getRepository(FeedbackEntity);
 
   const service = selectSentimentService();
@@ -44,10 +45,12 @@ export const getFeedbacks = async (
   limit: number = 10,
   searchKey: string,
   searchValue: string
-): Promise<PaginatedResponseType<FeedBackRequestType>> => {
-  
-  if (searchKey && !Object.values(FeedBackSearchKey).includes(searchKey as FeedBackSearchKey)) {
-      throw `query param ${searchKey} not supported`
+): Promise<PaginatedResponseType<FeedBackType>> => {
+  if (
+    searchKey &&
+    !Object.values(FeedBackSearchKey).includes(searchKey as FeedBackSearchKey)
+  ) {
+    throw `query param ${searchKey} not supported`;
   }
 
   const feedbackRepository = AppDataSource.getRepository(FeedbackEntity);
@@ -62,7 +65,7 @@ export const getFeedbacks = async (
     });
   }
 
-  query.skip(skip).take(limit).orderBy('feed_back.created_at', 'DESC') 
+  query.skip(skip).take(limit).orderBy("feed_back.created_at", "DESC");
 
   const [items, totalCount] = await query.getManyAndCount();
 
@@ -76,3 +79,39 @@ export const getFeedbacks = async (
     data: [...items],
   };
 };
+
+export const getFeedbackStatistics =
+  async (): Promise<FeedbackStatisticsType> => {
+    const feedbackRepository = AppDataSource.getRepository(FeedbackEntity);
+
+    const feedbacks = await feedbackRepository.find();
+
+    const group = feedbacks.reduce(
+      (acc, num) => {
+        if (num.sentimentScore > 0) {
+          acc.positive.push(num.sentimentScore);
+        } else if (num.sentimentScore < 0) {
+          acc.negative.push(num.sentimentScore);
+        } else {
+          acc.neutral.push(num.sentimentScore);
+        }
+
+        return acc;
+      },
+      { negative: [], positive: [], neutral: [] }
+    );
+
+    const positive = group.positive.length;
+
+    const negative = group.negative.length;
+
+    const neutral = group.neutral.length;
+
+    const total = positive + negative + neutral;
+
+    return {
+      negative: Math.round((negative / total) * 100),
+      positive: Math.round((positive / total) * 100),
+      neutral: Math.round((neutral / total) * 100),
+    };
+  };
