@@ -1,10 +1,11 @@
 /** @format */
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 import "dotenv/config";
 import { authService } from "@/services";
 
-export const authMiddleware = (
+
+export const authMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -20,11 +21,15 @@ export const authMiddleware = (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = authService.getUser(decoded);
+    const user = await authService.getUser(decoded);
 
     if (!user) throw "User Not Found!";
+
+    req.body.user = user;
+
     next();
   } catch (err) {
     res.status(401).json({ error: "Invalid token" });
   }
 };
+

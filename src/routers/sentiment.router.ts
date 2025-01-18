@@ -1,5 +1,5 @@
 import { sentimentController } from "@/controllers";
-import { authMiddleware } from "@/middlewares";
+import { authMiddleware, isAdmin } from "@/middlewares";
 import { validationRules } from "@/types/feedback.type";
 import { Router } from "express";
 
@@ -11,6 +11,6 @@ sentimentRouter.post(
   sentimentController.postFeedback
 );
 
-sentimentRouter.get("/feedbacks", authMiddleware, sentimentController.getFeedbacks);
+sentimentRouter.get("/feedbacks", authMiddleware, isAdmin, sentimentController.getFeedbacks);
 
-sentimentRouter.get("/feedbacks/statistics", authMiddleware, sentimentController.getFeedbacksStatistics);
+sentimentRouter.get("/feedbacks/statistics", authMiddleware, isAdmin, sentimentController.getFeedbacksStatistics);
