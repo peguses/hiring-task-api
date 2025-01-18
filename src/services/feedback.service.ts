@@ -14,7 +14,7 @@ import { PaginatedResponseType } from "@/types/paginated.response.type";
 
 const selectSentimentService = () => {
   switch (process.env.SENTIMENT_SERVICE) {
-    case SentimentService.FINN_SERVICE:
+    case SentimentService.AFINN_SERVICE:
       return createSentimentService(AfinnSentimentStrategy.process);
     case SentimentService.GOOGLE_SERVICE:
       return createSentimentService(GoogleSentimentStrategy.process);

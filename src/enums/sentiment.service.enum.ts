@@ -1,5 +1,5 @@
 export enum SentimentService {
-    FINN_SERVICE = "FINN_SERVICE", 
+    AFINN_SERVICE = "AFINN_SERVICE", 
     VADER_SERVICE = "VADER_SERVICE",
     GOOGLE_SERVICE = "GOOGLE_SERVICE"
 }
